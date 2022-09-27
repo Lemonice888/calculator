@@ -17,7 +17,6 @@ let currentOperator = ''
 
 const previousArea = document.createElement('div')
 previousArea.classList.add('previousArea')
-resultArea.appendChild(previousArea)
 
 //remember to delete this
 const checkCurrentD = document.querySelector('#check1')
@@ -58,6 +57,8 @@ backspace.addEventListener('click', () => {
 /* TASK 1:
 Create the functions that populate the display when you click the number buttons. 
 You should be storing the ‘display value’ in a variable somewhere for use in the next step. */
+
+// input digits
 digitBtns.forEach((digitBtn) => {
     function storeDigits() {
         if (currentDigits.length < 15) {
@@ -68,10 +69,36 @@ digitBtns.forEach((digitBtn) => {
             return
         }
     }
+
+    //condition for storing the values
+    if (currentDigits == '') {
     digitBtn.addEventListener('click', () => {
         storeDigits(currentDigits)
-        resultArea.textContent = currentDigits
+        resultArea.textContent += currentDigits
+    })
+    } else if (currentDigits !== ''  && currentOperator !== '') {
+        storeDigits(nextDigits)
+        resultArea.textContent += nextDigits
+    }
+})
+
+// input the operator
+operatorBtns.forEach((operatorBtn) => {
+    operatorBtn.addEventListener('click', () => {
+        if (checkCurentOp === '') {
+            return
+        } else if (currentOperator !== '') {
+            return
+        } else {
+            
+        }
     })
 })
+
+
+/*TASK 2:
+You’ll need to store the first number that is input into the calculator when a user presses an operator, 
+and also save which operation has been chosen and then operate() on them when the user presses the “=” key. */
+
 
 
