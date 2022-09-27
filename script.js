@@ -10,18 +10,20 @@ const operatorBtns = document.querySelectorAll('.operators')
 const resultArea = document.querySelector('.result')
 const buttons = document.querySelectorAll('button')
 
-let currentDigits = []
-let nextDigits = []
+let firstDigits = []
+let secondDigits = []
 let previousResultDigits = []
 let currentOperator = ''
 
-const previousArea = document.createElement('div')
-previousArea.classList.add('previousArea')
-
 //remember to delete this
+const checkArea = document.querySelector('#check0')
+checkArea.addEventListener('click', () => {
+    console.log(resultArea.textContent)    
+})
+
 const checkCurrentD = document.querySelector('#check1')
 checkCurrentD.addEventListener('click', () => {
-    console.log(currentDigits)    
+    console.log(firstDigits)    
 })
 
 const checkCurentOp = document.querySelector('#check2')
@@ -31,14 +33,14 @@ checkCurentOp.addEventListener('click', () => {
 
 const checkNextD = document.querySelector('#check3')
 checkNextD.addEventListener('click', () => {
-    console.log(nextDigits)    
+    console.log(secondDigits)    
 })
 
 /* AC BUTTON */
 const eraseEntireBtn = document.querySelector('.eraseEntire')
 eraseEntireBtn.addEventListener('click', () => {
     resultArea.textContent = '0'
-    currentDigits = []
+    firstDigits = []
     previousResultDigits = []
     currentOperator = ''
 })
@@ -46,9 +48,9 @@ eraseEntireBtn.addEventListener('click', () => {
 /* BACKSPACE BUTTON */
 const backspace = document.querySelector('.erase')
 backspace.addEventListener('click', () => {
-    if (currentDigits !== '') {
-        currentDigits = currentDigits.slice(0, -1)
-    } else if (currentOperator !== '') {
+    if (firstDigits !== '' ) {
+        firstDigits = firstDigits.slice(0, -1)
+    } if (currentOperator !== '') {
         currentOperator = currentOperator.slice(0, -1)
     }
     resultArea.textContent = resultArea.textContent.slice(0, -1)
@@ -57,48 +59,42 @@ backspace.addEventListener('click', () => {
 /* TASK 1:
 Create the functions that populate the display when you click the number buttons. 
 You should be storing the ‘display value’ in a variable somewhere for use in the next step. */
-
-// input digits
 digitBtns.forEach((digitBtn) => {
     function storeDigits() {
-        if (currentDigits.length < 15) {
-            currentDigits += digitBtn.id
-        } else if (nextDigits.length < 15 && currentDigits !== '' && currentOperator !== '') {
-            nextDigits += digitBtn.id
-        } else {
-            return
+        if (firstDigits.length < 15) {
+            firstDigits += digitBtn.id
+            resultArea.textContent = firstDigits
         }
     }
 
-    //condition for storing the values
-    if (currentDigits == '') {
+    function storeNextDigits() {
+       if (secondDigits.length < 15) {
+            secondDigits += digitBtn.id
+            resultArea.textContent = `${firstDigits} ${currentOperator} ${secondDigits}`
+        }
+    } 
+
     digitBtn.addEventListener('click', () => {
-        storeDigits(currentDigits)
-        resultArea.textContent += currentDigits
-    })
-    } else if (currentDigits !== ''  && currentOperator !== '') {
-        storeDigits(nextDigits)
-        resultArea.textContent += nextDigits
-    }
-})
-
-// input the operator
-operatorBtns.forEach((operatorBtn) => {
-    operatorBtn.addEventListener('click', () => {
-        if (currentDigits === '') {
-            return
+        if (currentOperator === '') {
+            storeDigits()
         } else if (currentOperator !== '') {
-            return
-        } else {
-
+            storeNextDigits()
         }
     })
 })
 
-
-/*TASK 2:
-You’ll need to store the first number that is input into the calculator when a user presses an operator, 
-and also save which operation has been chosen and then operate() on them when the user presses the “=” key. */
-
-
-
+// operator button
+operatorBtns.forEach((operatorBtn) => {
+    function storeOperator() {
+        currentOperator = operatorBtn.id
+    }
+    
+    operatorBtn.addEventListener('click', () => {
+        if (firstDigits === '') {
+            return
+        } else if (firstDigits !== '')  {
+            storeOperator()
+            resultArea.textContent += currentOperator
+        }
+    })
+})
