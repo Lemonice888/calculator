@@ -3,28 +3,35 @@
     <title>Calculator</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial scale=1.0">
-    <link href="style.css">
+    <link href="style.css" rel="stylesheet">
 </head>
 <body>
-    <section class="digit">
+    <section class="digitsBtn">
         <button class="digit" id="1">1</button>
         <button class="digit" id="2">2</button>
-        <button class="3" id="digit">3</button>
-        <button class="4" id="digit">4</button>
-        <button class="5" id="digit">5</button>
-        <button class="6" id="digit">6</button>
-        <button class="7" id="digit">7</button>
-        <button class="8" id="digit">8</button>
-        <button class="9" id="digit">9</button>
+        <button class="digit" id="3">3</button>
+        <button class="digit" id="4">4</button>
+        <button class="digit" id="5">5</button>
+        <button class="digit" id="6">6</button>
+        <button class="digit" id="7">7</button>
+        <button class="digit" id="8">8</button>
+        <button class="digit" id="9">9</button>
     </section>
-    <section class="operators">
-        <button class="-" id="operators">÷</button>
-        <button class="x" id="operators">x</button>
-        <button class="-" id="operators">-</button>
-        <button class="+" id="operators">+</button>
-        <button class="=" id="operators">=</button>
+    <section class="operatorsBtn">
+        <button class="operators" id="÷">÷</button>
+        <button class="operators" id="x">x</button>
+        <button class="operators" id="-">-</button>
+        <button class="operators" id="+">+</button>
+        <button class="equal" id="=">=</button>
+        <button class="erase">BACKSPACE</button>
+        <button class="eraseEntire">AC</button>
+
+        <br>
+        <button id="check1">CHECK CURRENT DIGITS</button>
+        <button id="check2">CHECK CURRENT OPERATOR</button>
+        <button id="check3">CHECK NEXT DIGITS</button>
     </section>
-    <section class="result">
+    <section class="resultArea">
         <p class="result"></p>
     </section>
     <script src="script.js"></script>
