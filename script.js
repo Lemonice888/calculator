@@ -54,10 +54,12 @@ eraseEntireBtn.addEventListener('click', () => {
 /* BACKSPACE BUTTON */
 const backspace = document.querySelector('.erase')
 backspace.addEventListener('click', () => {
-    if (firstDigits !== '' ) {
+    if (currentOperator === '' && firstDigits !== '') {
         firstDigits = firstDigits.slice(0, -1)
-    } if (currentOperator !== '') {
-        currentOperator = currentOperator.slice(0, -1)
+    } else if (secondDigits === '' && currentOperator !== '' && firstDigits !== '') {
+        currentOperator = ''
+    } else if (secondDigits !== ''&& secondDigits !== '' && secondDigits !== '') {
+        secondDigits = secondDigits.slice(0, -1)
     }
     resultArea.textContent = resultArea.textContent.slice(0, -1)
 })
@@ -89,20 +91,54 @@ operatorBtns.forEach((operatorBtn) => {
     })
 })
 
-function add (x, y) {
+function add(x, y) {
     resultDigits = x + y
-    firstDigits = resultDigits
-    nextDigits = ''
+    resultDigits =  firstDigits
+    secondDigits = ''
+}
+
+function substract(x, y) {
+    resultDigits = x - y
+    resultDigits =  firstDigits
+    secondDigits = ''
+}
+
+function multiple(x, y) {
+    resultDigits = x * y
+    resultDigits =  firstDigits
+    secondDigits = ''
+}
+
+function divide(x, y) {
+    if (y === 0) {
+        return 'no.'
+    } else {
+        resultDigits = x / y
+        resultDigits =  firstDigits
+        secondDigits = ''
+    }
+}
+
+
+function multiple(x, y) {
+    resultDigits = x * y
+    resultDigits =  firstDigits
+    secondDigits = ''
 }
 
 /* EQUAL BUTTON */
 equal.addEventListener('click', () => {
     x = parseFloat(firstDigits)
     y = parseFloat(secondDigits)
+
     if (currentOperator === '+') {
         add(x, y)
+    } else if (currentOperator === '-') {
+        substract(x, y)
+    } else if (currentOperator === '÷') {
+        divide(x, y)
+    } else if (currentOperator === 'x') {
+        multiple(x, y)
     }
-    console.log(resultDigits)
-    console.log(firstDigits)
-    console.log(nextDigits)
+    
 })
