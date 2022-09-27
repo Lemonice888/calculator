@@ -1,9 +1,11 @@
 /* WHAT TO DO 
 1. make sure the first element that the user will click on is the'first operand'. Prevent the user from clicking the operator button first. ---DONE
-2. Store the first operand if the user has clicked the operator button.
-3. Make sure that the user won't click the operator button twice. --DONE
-4. Only take the last operator if the users click it twice.
-4. Store the second operand and execute the operation if the user has clicked the '=' button. */
+2. Store the first digits if the user has not clicked the operator button. --DONE
+3. Store the second digits if the user has clicked the operator button. --DONE
+4. Make sure that the user won't click the operator button twice. --DONE
+5. Only take the last operator if the users click it twice.
+6. Execute the operation if the user has clicked the '=' button.
+7. Prevent user from clicking the = button first */
 
 const digitBtns = document.querySelectorAll('.digit')
 const operatorBtns = document.querySelectorAll('.operators')
@@ -15,6 +17,8 @@ let firstDigits = []
 let secondDigits = []
 let resultDigits = []
 let currentOperator = ''
+
+const history = resultArea.c
 
 //remember to delete this
 const checkArea = document.querySelector('#check0')
@@ -93,11 +97,12 @@ function add (x, y) {
 
 /* EQUAL BUTTON */
 equal.addEventListener('click', () => {
+    x = parseFloat(firstDigits)
+    y = parseFloat(secondDigits)
     if (currentOperator === '+') {
-        x = Number(firstDigits)
-        y = Number(secondDigits)
-
         add(x, y)
     }
     console.log(resultDigits)
+    console.log(firstDigits)
+    console.log(nextDigits)
 })
