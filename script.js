@@ -85,12 +85,12 @@ digitBtns.forEach((digitBtn) => {
 // input the operator
 operatorBtns.forEach((operatorBtn) => {
     operatorBtn.addEventListener('click', () => {
-        if (checkCurentOp === '') {
+        if (currentDigits === '') {
             return
         } else if (currentOperator !== '') {
             return
         } else {
-            
+
         }
     })
 })
