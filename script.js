@@ -9,10 +9,11 @@ const digitBtns = document.querySelectorAll('.digit')
 const operatorBtns = document.querySelectorAll('.operators')
 const resultArea = document.querySelector('.result')
 const buttons = document.querySelectorAll('button')
+const equal = document.querySelector('.equal')
 
 let firstDigits = []
 let secondDigits = []
-let previousResultDigits = []
+let resultDigits = []
 let currentOperator = ''
 
 //remember to delete this
@@ -40,8 +41,9 @@ checkNextD.addEventListener('click', () => {
 const eraseEntireBtn = document.querySelector('.eraseEntire')
 eraseEntireBtn.addEventListener('click', () => {
     resultArea.textContent = '0'
-    firstDigits = []
-    previousResultDigits = []
+    firstDigits = ''
+    secondDigits = ''
+    previousResultDigits = ''
     currentOperator = ''
 })
 
@@ -56,45 +58,46 @@ backspace.addEventListener('click', () => {
     resultArea.textContent = resultArea.textContent.slice(0, -1)
 })
 
-/* TASK 1:
-Create the functions that populate the display when you click the number buttons. 
-You should be storing the ‘display value’ in a variable somewhere for use in the next step. */
+/* DIGIT BUTTONS */
 digitBtns.forEach((digitBtn) => {
-    function storeDigits() {
-        if (firstDigits.length < 15) {
+    digitBtn.addEventListener('click', () => {
+        if (currentOperator === '' && firstDigits.length < 15) {
             firstDigits += digitBtn.id
             resultArea.textContent = firstDigits
-        }
-    }
-
-    function storeNextDigits() {
-       if (secondDigits.length < 15) {
+        } else if (currentOperator !== '' && secondDigits.length < 15) {
             secondDigits += digitBtn.id
             resultArea.textContent = `${firstDigits} ${currentOperator} ${secondDigits}`
-        }
-    } 
-
-    digitBtn.addEventListener('click', () => {
-        if (currentOperator === '') {
-            storeDigits()
-        } else if (currentOperator !== '') {
-            storeNextDigits()
         }
     })
 })
 
-// operator button
+/* OPERATOR BUTTON */
 operatorBtns.forEach((operatorBtn) => {
-    function storeOperator() {
-        currentOperator = operatorBtn.id
-    }
-    
     operatorBtn.addEventListener('click', () => {
-        if (firstDigits === '') {
+        if (resultArea.textContent == '0') {
             return
-        } else if (firstDigits !== '')  {
-            storeOperator()
-            resultArea.textContent += currentOperator
+        } else if (currentOperator !== '') {
+            return
+        } else {
+            resultArea.textContent += operatorBtn.id
+            currentOperator = operatorBtn.id
         }
     })
+})
+
+function add (x, y) {
+    resultDigits = x + y
+    firstDigits = resultDigits
+    nextDigits = ''
+}
+
+/* EQUAL BUTTON */
+equal.addEventListener('click', () => {
+    if (currentOperator === '+') {
+        x = Number(firstDigits)
+        y = Number(secondDigits)
+
+        add(x, y)
+    }
+    console.log(resultDigits)
 })

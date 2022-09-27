@@ -35,8 +35,7 @@ buttons.forEach((button) => {
                 resultArea.textContent += button.id
                 currentOperator = button.id
             }
-        } else if (button.classList.contains('erase')) {
-            resultArea.textContent.split()
         }
     })
 })
+}
