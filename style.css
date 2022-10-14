@@ -1,5 +1,130 @@
-.result {
-    border: 2px solid black;
-    border-radius: 2px;
-    height: 20px;
+@font-face {
+    font-family: nunito;
+    src: url(fonts/Nunito-SemiBold.ttf);
 }
+
+@font-face {
+    font-family: nunitoB;
+    src: url(fonts/Nunito-Bold.ttf);
+}
+
+h1 {
+    font-family: nunitoB;
+    font-size: 40px;
+}
+
+.digit, .operators, .eraseEntire, .erase{
+    font-family: nunito;
+}
+
+.eraseEntire, .erase {
+    font-size: 20px;
+}
+
+.digit, .decimal {
+    font-size: 20px;
+}
+
+.resultArea {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-direction: column;
+    margin-top: -17px;
+    font-family: nunito;
+    font-size: 27px;   
+}
+
+.historyArea{
+    height: 10px;
+    font-size: 15px;
+}
+
+.centeredArea {
+    border: 4px solid black;
+    border-radius: 2px;
+    height: 50px;
+    width: 90vw;
+    max-width: 280px;
+    padding: 5px;
+    border-radius: 10px;
+    background-color: #D4ECDD;
+}
+
+.first {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.eraseEntire, .erase {
+    width: 102.5px;
+    height: 65px;
+}
+
+button {
+    margin: 5px;
+    background-color: #345B63;
+    color: #D4ECDD;
+    border: 0.5px solid #345B63;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #608d96;
+    cursor: pointer;
+}
+
+.operators {
+    color: #112031;
+    font-size: 25px;
+}
+
+.equal {
+    background-color: #8dafb6;
+    color: #345B63;
+    font-size: 30px;
+}
+
+body {
+    background-color: black;
+}
+
+#÷ {
+    width: 65px;
+}
+
+.second, .third, .fifth, .forth {
+    display: flex;
+    flex-direction: row;
+}
+
+.second button, .third button, .forth button, .fifth button {
+    width: 65px;
+    height: 65px;
+}
+
+.buttonboard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#centeredEntire {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#outer {
+    border: 3px solid black;
+    padding: 15px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #112031;
+}
+

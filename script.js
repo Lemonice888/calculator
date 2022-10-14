@@ -1,54 +1,71 @@
-/* WHAT TO DO 
-1. make sure the first element that the user will click on is the'first operand'. Prevent the user from clicking the operator button first. ---DONE
-2. Store the first digits if the user has not clicked the operator button. --DONE
-3. Store the second digits if the user has clicked the operator button. --DONE
-4. Make sure that the user won't click the operator button twice. --DONE
-5. Only take the last operator if the users click it twice.
-6. Execute the operation if the user has clicked the '=' button.
-7. Prevent user from clicking the = button first */
-
 const digitBtns = document.querySelectorAll('.digit')
 const operatorBtns = document.querySelectorAll('.operators')
 const resultArea = document.querySelector('.result')
 const buttons = document.querySelectorAll('button')
 const equal = document.querySelector('.equal')
+const history = document.querySelector('.history')
 
-let firstDigits = []
-let secondDigits = []
-let resultDigits = []
+let firstDigits = ''
+let secondDigits = ''
+let resultDigits = ''
 let currentOperator = ''
-
-const history = resultArea.c
-
-//remember to delete this
-const checkArea = document.querySelector('#check0')
-checkArea.addEventListener('click', () => {
-    console.log(resultArea.textContent)    
-})
-
-const checkCurrentD = document.querySelector('#check1')
-checkCurrentD.addEventListener('click', () => {
-    console.log(firstDigits)    
-})
-
-const checkCurentOp = document.querySelector('#check2')
-checkCurentOp.addEventListener('click', () => {
-    console.log(currentOperator)    
-})
-
-const checkNextD = document.querySelector('#check3')
-checkNextD.addEventListener('click', () => {
-    console.log(secondDigits)    
-})
 
 /* AC BUTTON */
 const eraseEntireBtn = document.querySelector('.eraseEntire')
 eraseEntireBtn.addEventListener('click', () => {
-    resultArea.textContent = '0'
     firstDigits = ''
     secondDigits = ''
-    previousResultDigits = ''
+    resultDigits = ''
     currentOperator = ''
+    resultArea.textContent = '0'
+    history.textContent = ''
+})
+
+/* OPERATOR BUTTON */
+operatorBtns.forEach((operatorBtn) => {
+    operatorBtn.addEventListener('click', () => {
+        if (resultArea.textContent == '0') {
+            return
+        } else if (currentOperator !== '') {
+            if (secondDigits !== '') {
+                operateAndShow()
+            } else if (secondDigits === '') {
+                return
+            }
+        } else if (resultArea.textContent !== '0') {
+            resultArea.textContent += operatorBtn.id
+            currentOperator = operatorBtn.id
+        } else if (resultDigits !== '') {
+            newCurrentOperator = operatorBtn.id
+            resultArea.textContent += operatorBtn.id
+        } 
+        if (resultDigits !== '') {
+            currentOperator = operatorBtn.id
+            resultArea.textContent = `${currentOperator}`
+        }
+    })
+})
+
+/* DECIMAL */
+const decimalBtn = document.querySelector('.decimal')
+decimalBtn.addEventListener('click', () => {
+    if (resultArea.textContent === '0' || secondDigits.includes('.')) {
+        return
+    } else if (firstDigits !== '' && currentOperator === '' && secondDigits === '') {
+        if (firstDigits.includes('.')) {
+            return
+        } else {
+            firstDigits += decimalBtn.id
+            resultArea.textContent = firstDigits
+        }
+    } else if (currentOperator !== '' && secondDigits !== '') {
+        if (secondDigits.includes('.')) {
+            return
+        } else {
+            secondDigits += decimalBtn.id
+            resultArea.textContent = `${firstDigits} ${currentOperator} ${secondDigits}`
+        } 
+    }
 })
 
 /* BACKSPACE BUTTON */
@@ -56,12 +73,14 @@ const backspace = document.querySelector('.erase')
 backspace.addEventListener('click', () => {
     if (currentOperator === '' && firstDigits !== '') {
         firstDigits = firstDigits.slice(0, -1)
-    } else if (secondDigits === '' && currentOperator !== '' && firstDigits !== '') {
+        resultArea.textContent = resultArea.textContent.slice(0, -1)
+    } else if (secondDigits === '' && currentOperator !== '' && firstDigits!== '') {
+        resultArea.textContent = `${firstDigits}`
         currentOperator = ''
-    } else if (secondDigits !== ''&& secondDigits !== '' && secondDigits !== '') {
+    } else if (secondDigits !== '') {
         secondDigits = secondDigits.slice(0, -1)
+        resultArea.textContent = resultArea.textContent.slice(0, -1)
     }
-    resultArea.textContent = resultArea.textContent.slice(0, -1)
 })
 
 /* DIGIT BUTTONS */
@@ -77,68 +96,79 @@ digitBtns.forEach((digitBtn) => {
     })
 })
 
-/* OPERATOR BUTTON */
-operatorBtns.forEach((operatorBtn) => {
-    operatorBtn.addEventListener('click', () => {
-        if (resultArea.textContent == '0') {
-            return
-        } else if (currentOperator !== '') {
-            return
-        } else {
-            resultArea.textContent += operatorBtn.id
-            currentOperator = operatorBtn.id
-        }
-    })
-})
-
+/* OPERATIONS */
 function add(x, y) {
     resultDigits = x + y
-    resultDigits =  firstDigits
-    secondDigits = ''
 }
 
 function substract(x, y) {
     resultDigits = x - y
-    resultDigits =  firstDigits
-    secondDigits = ''
 }
 
 function multiple(x, y) {
     resultDigits = x * y
-    resultDigits =  firstDigits
-    secondDigits = ''
 }
 
 function divide(x, y) {
-    if (y === 0) {
-        return 'no.'
+    if (y == 0 || y == 0) {
+        resultDigits = `Bruh.`
     } else {
         resultDigits = x / y
-        resultDigits =  firstDigits
-        secondDigits = ''
     }
 }
 
-
 function multiple(x, y) {
     resultDigits = x * y
-    resultDigits =  firstDigits
-    secondDigits = ''
+}
+
+function operateAndShow() {
+        x = parseFloat(firstDigits)
+        y = parseFloat(secondDigits)
+
+        if (currentOperator === '+') {
+            add(x, y)
+        } else if (currentOperator === '-') {
+            substract(x, y)
+        } else if (currentOperator === '÷') {
+            divide(x, y)
+        } else if (currentOperator === 'x') {
+            multiple(x, y)
+        }
+    
+        if (resultDigits === 'Bruh.') {
+            history.textContent = ''
+            resultArea.textContent = resultDigits
+            return
+        } else {
+            console.log(resultDigits)
+            history.textContent = `${firstDigits} ${currentOperator} ${secondDigits} = ${resultDigits}`
+            secondDigits = ''
+            firstDigits = resultDigits
+            resultArea.textContent = ''
+        } 
 }
 
 /* EQUAL BUTTON */
 equal.addEventListener('click', () => {
-    x = parseFloat(firstDigits)
-    y = parseFloat(secondDigits)
-
-    if (currentOperator === '+') {
-        add(x, y)
-    } else if (currentOperator === '-') {
-        substract(x, y)
-    } else if (currentOperator === '÷') {
-        divide(x, y)
-    } else if (currentOperator === 'x') {
-        multiple(x, y)
+    if (resultArea.textContent === '0') {
+        return
+    } else if (currentOperator === '' || secondDigits === '') {
+        return
+    } else {
+        operateAndShow()
+        currentOperator = ''
     }
-    
 })
+
+/* WHAT TO DO
+1. make sure the first element that the user will click on is the'first operand'. Prevent the user from clicking the operator button first. ---DONE
+2. Store the first digits if the user has not clicked the operator button. --DONE
+3. Store the second digits if the user has clicked the operator button. --DONE
+4. Make sure that the user won't click the operator button twice. --DONE
+5. Allow the user to do repetitive calculation. --DONE
+    -> NEED TO BE FIXED: the user has to click the op button twice right now. --DONE
+6. Execute the operation if the user has clicked the '=' button. --DONE
+7. Prevent user from clicking the = button first --DONE 
+https://stackoverflow.com/questions/6095795/convert-a-javascript-string-variable-to-decimal-money
+https://stackoverflow.com/questions/6134039/format-number-to-always-show-2-decimal-places 
+https://www.w3schools.com/jsref/jsref_tofixed.asp */
