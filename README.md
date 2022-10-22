@@ -1,6 +1,6 @@
 # Calculator
 
-[click here](https://lemonice888.github.io/calculator) for live preview!
+[click here](https://lemonaisu888.github.io/calculator) for live preview!
 
 ![preview](images/calscreen.png)
 
